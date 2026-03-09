@@ -87,24 +87,25 @@ function ScrollToBottom(props: { className?: string }) {
   );
 }
 
-function OpenGitHubRepo() {
+function OpenLabWebsite() {
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
           <a
-            href="https://github.com/langchain-ai/agent-chat-ui"
+            href="https://cida.uos.ac.kr/"
             target="_blank"
             className="flex items-center justify-center"
           >
-            <GitHubSVG
-              width="24"
-              height="24"
+            <img
+              src="/logo_1.png"
+              alt="CIDA Lab"
+              className="h-6 w-auto object-contain"
             />
           </a>
         </TooltipTrigger>
         <TooltipContent side="left">
-          <p>Open GitHub repo</p>
+          <p>CIDA Lab</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -122,7 +123,7 @@ export function Thread() {
   );
   const [hideToolCalls, setHideToolCalls] = useQueryState(
     "hideToolCalls",
-    parseAsBoolean.withDefault(false),
+    parseAsBoolean.withDefault(true),
   );
   const [input, setInput] = useState("");
   const {
@@ -326,7 +327,7 @@ export function Thread() {
                 )}
               </div>
               <div className="absolute top-2 right-4 flex items-center">
-                <OpenGitHubRepo />
+                <OpenLabWebsite />
               </div>
             </div>
           )}
@@ -360,19 +361,20 @@ export function Thread() {
                     damping: 30,
                   }}
                 >
-                  <LangGraphLogoSVG
-                    width={32}
-                    height={32}
+                  <img
+                    src="/logo_1.png"
+                    alt="CIDA Lab"
+                    className="h-8 w-auto object-contain flex-shrink-0"
                   />
                   <span className="text-xl font-semibold tracking-tight">
-                    Agent Chat
+                    K-League AI Chat
                   </span>
                 </motion.button>
               </div>
 
               <div className="flex items-center gap-4">
                 <div className="flex items-center">
-                  <OpenGitHubRepo />
+                  <OpenLabWebsite />
                 </div>
                 <TooltipIconButton
                   size="lg"
@@ -435,11 +437,40 @@ export function Thread() {
               footer={
                 <div className="sticky bottom-0 flex flex-col items-center gap-8 bg-white">
                   {!chatStarted && (
-                    <div className="flex items-center gap-3">
-                      <LangGraphLogoSVG className="h-8 flex-shrink-0" />
-                      <h1 className="text-2xl font-semibold tracking-tight">
-                        Agent Chat
-                      </h1>
+                    <div className="flex flex-col items-center gap-4 w-full max-w-3xl">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src="/logo_1.png"
+                          alt="CIDA Lab"
+                          className="h-8 w-auto object-contain flex-shrink-0"
+                        />
+                        <h1 className="text-2xl font-semibold tracking-tight">
+                          K-League AI Chat
+                        </h1>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 w-full">
+                        {[
+                          "2025년 6월에 있었던 인천과 화성FC의 경기에서 제르소 패스맵 띄워줘.",
+                          "2025시즌 제르소의 패스맵 띄워줘.",
+                          "2025년 7월에 있었던 전북 홈에서 있었던 강원과의 경기에서 콤파뇨 슈팅 위치 다 찍어봐.",
+                          "2024년 1부리그 득점 순위를 알려줘.",
+                        ].map((question) => (
+                          <button
+                            key={question}
+                            type="button"
+                            onClick={() => {
+                              setInput(question);
+                              setTimeout(() => {
+                                const form = document.querySelector("form");
+                                form?.requestSubmit();
+                              }, 0);
+                            }}
+                            className="text-left rounded-xl border bg-gray-50 hover:bg-gray-100 transition-colors p-3 text-sm text-gray-700 shadow-xs"
+                          >
+                            {question}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   )}
 
@@ -484,30 +515,6 @@ export function Thread() {
                       />
 
                       <div className="flex items-center gap-6 p-2 pt-4">
-                        <div>
-                          <div className="flex items-center space-x-2">
-                            <Switch
-                              id="render-tool-calls"
-                              checked={hideToolCalls ?? false}
-                              onCheckedChange={setHideToolCalls}
-                            />
-                            <Label
-                              htmlFor="render-tool-calls"
-                              className="text-sm text-gray-600"
-                            >
-                              Hide Tool Calls
-                            </Label>
-                          </div>
-                        </div>
-                        <Label
-                          htmlFor="file-input"
-                          className="flex cursor-pointer items-center gap-2"
-                        >
-                          <Plus className="size-5 text-gray-600" />
-                          <span className="text-sm text-gray-600">
-                            Upload PDF or Image
-                          </span>
-                        </Label>
                         <input
                           id="file-input"
                           type="file"

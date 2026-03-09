@@ -11,8 +11,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Agent Chat",
-  description: "Agent Chat UX by LangChain",
+  title: "K-League AI Chat",
+  description: "K-League AI Chat powered by FootballDJ",
+  icons: { icon: "/favicon.png" },
 };
 
 export default function RootLayout({
